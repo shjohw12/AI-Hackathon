@@ -16,7 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
-    private static final String[] AUTH_PATH = {"/api/users", "/api/users/login"};
+    private static final String[] AUTH_PATH = {"/api/users", "/api/users/login", "api/test2", "api/test"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

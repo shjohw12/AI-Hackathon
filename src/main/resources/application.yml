@@ -11,3 +11,6 @@ spring:
       release:
       performance:
     default: local
+
+chatgpt:
+  api-key: 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

@@ -2,29 +2,41 @@ package real.world;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
 import java.util.List;
 
 @SpringBootTest
+@WebAppConfiguration
 class WorldApplicationTests {
 
     @Test
     void contextLoads() {
     }
 
-//    @Test
-//    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
-//        ProcessBuilder processBuilder = new ProcessBuilder("python", resolvePythonScriptPath("hello.py"));
-//        processBuilder.redirectErrorStream(true);
-//
-//        Process process = processBuilder.start();
-//        List<String> results = readProcessOutput(process.getInputStream());
-//
-//        assertThat("Results should not be empty", results, is(not(empty())));
-//        assertThat("Results should contain output of script: ", results, hasItem(
-//                containsString("Hello Baeldung Readers!!")));
-//
-//        int exitCode = process.waitFor();
-//        assertEquals("No errors should be detected", 0, exitCode);
-//    }
+    @Test
+    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
+        ProcessBuilder processBuilder = new ProcessBuilder("python", resolveFilePath("hello.py"));
+        processBuilder.redirectErrorStream(true);
+
+        Process process = processBuilder.start();
+
+        int exitCode = process.waitFor();
+
+        var br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        String line;
+
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+    }
+
+    private String resolveFilePath(String path){
+        File file = new File(path);
+        return file.getAbsolutePath();
+    }
 }
